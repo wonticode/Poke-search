@@ -48,7 +48,7 @@ function displayNameId(data) {
   const pokeNameDisplay = document.querySelector("#pokemonNameDisplay h2");
   const pokeName = data.name;
   pokeNameDisplay.textContent = pokeName;
-  const pokemonIdDisplay = document.querySelector("#pokemonId h2");
+  const pokemonIdDisplay = document.querySelector("#pokemonId h4");
   const pokemonID = data.id;
   pokemonIdDisplay.textContent = pokemonID;
 }
