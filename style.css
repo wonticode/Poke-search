@@ -115,7 +115,6 @@ h1 {
 }
 
 .pokemon-name {
-  position: relative;
   display: inline-block;
   font-size: 2rem;
   font-weight: bold;
@@ -126,7 +125,6 @@ h1 {
 
 .pokemon-id {
   margin-left: 5px;
-  position: absolute;
   align-items: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
