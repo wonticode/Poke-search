@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Pokémon Search</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔍 Pokémon Search</h1>
+
+      <div class="search-container">
+        <div class="search-box">
+          <input
+            type="text"
+            class="search-input"
+            id="pokemonName"
+            placeholder="Enter Pokémon name or ID..."
+            onchange="fetchData()"
+          />
+        </div>
+        <button class="search-btn" id="searchBtn" onclick="fetchData()">
+          Search Pokémon
+        </button>
+      </div>
+
+      <div class="loading" id="loading">Searching for Pokémon...</div>
+
+      <div class="error-message" id="errorMessage">
+        Pokémon not found! Please try a different name or ID.
+      </div>
+
+      <div class="pokemon-display" id="pokemonDisplay">
+        <div class="pokemon-image">
+          <img id="pokemonImg" src="" alt="Pokemon" />
+        </div>
+
+        <div class="pokemon-name" id="pokemonNameDisplay">
+          <h2></h2>
+        </div>
+        <div class="pokemon-id" id="pokemonId"><h5></h5></div>
+
+        <div class="pokemon-types" id="pokemonTypes">
+          <!-- Types will be populated here -->
+        </div>
+
+        <div class="pokemon-info">
+          <div class="info-item">
+            <div class="info-label">Height</div>
+            <div class="info-value" id="pokemonHeight"><h4></h4></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Weight</div>
+            <div class="info-value" id="pokemonWeight"><h4></h4></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
