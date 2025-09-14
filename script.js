@@ -55,14 +55,14 @@ function displayNameId(data) {
 
 function displayHeight(data) {
   const heightH4 = document.querySelector("#pokemonHeight h4");
-  const pokemonHeight = data.height;
-  heightH4.textContent = pokemonHeight;
+  const pokemonHeight = data.height / 10;
+  heightH4.textContent = `${pokemonHeight}m`;
 }
 
 function displayWeight(data) {
   const weightH4 = document.querySelector("#pokemonWeight h4");
-  const pokemonWeight = data.weight;
-  weightH4.textContent = pokemonWeight;
+  const pokemonWeight = data.weight / 10;
+  weightH4.textContent = `${pokemonWeight}Kg`;
 }
 
 function displayType(data) {
