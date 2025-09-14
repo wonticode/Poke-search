@@ -48,7 +48,7 @@ function displayNameId(data) {
   const pokeNameDisplay = document.querySelector("#pokemonNameDisplay h2");
   const pokeName = data.name;
   pokeNameDisplay.textContent = pokeName;
-  const pokemonIdDisplay = document.querySelector("#pokemonId h5");
+  const pokemonIdDisplay = document.querySelector("#pokemonId h2");
   const pokemonID = data.id;
   pokemonIdDisplay.textContent = pokemonID;
 }
@@ -66,6 +66,14 @@ function displayWeight(data) {
 }
 
 function displayType(data) {
-  const pokemonTypesHTML = document.getElementsClassName("pokemon-types");
-  
+  const typesDiv = document.getElementById("pokemonTypes");
+  typesDiv.innerHTML = "";
+
+  data.types.forEach((element) => {
+    const typeName = element.type.name;
+    const typeElement = document.createElement("h3");
+    typeElement.textContent = typeName;
+    typesDiv.appendChild(typeElement);
+    typeElement.classList.add(`type-${typeName}`);
+  });
 }
