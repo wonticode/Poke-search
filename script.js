@@ -77,3 +77,53 @@ function displayType(data) {
     typeElement.classList.add(`type-${typeName}`);
   });
 }
+
+// test
+let pokemonList = [];
+
+async function loadPokemonList() {
+  const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1000");
+  const data = await response.json();
+  pokemonList = data.results.map((p) => p.name);
+}
+
+function showSuggestions(query) {
+  const suggestionsContainer = document.getElementById("suggestions");
+  if (!query) {
+    suggestionsContainer.classList.remove("show");
+    suggestionsContainer.innerHTML = "";
+    return;
+  }
+
+  const suggestions = pokemonList.filter((name) =>
+    name.startsWith(query.toLowerCase())
+  );
+
+  if (suggestions.length === 0) {
+    suggestionsContainer.classList.remove("show");
+    suggestionsContainer.innerHTML = "";
+    return;
+  }
+
+  suggestionsContainer.innerHTML = "";
+
+  suggestions.forEach((name) => {
+    const div = document.createElement("div");
+    div.textContent = name;
+    div.classList.add("suggestion-item");
+    div.onclick = () => {
+      document.getElementById("pokemonName").value = name;
+      suggestionsContainer.classList.remove("show");
+      suggestionsContainer.innerHTML = "";
+    };
+    suggestionsContainer.appendChild(div);
+  });
+
+  suggestionsContainer.classList.add("show");
+}
+
+document.getElementById("pokemonName").addEventListener("input", (e) => {
+  showSuggestions(e.target.value);
+});
+
+loadPokemonList();
