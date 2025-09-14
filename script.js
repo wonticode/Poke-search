@@ -1,67 +1,84 @@
 async function fetchData() {
   try {
+    // loading
+    document.getElementById("loading").classList.add("show");
+
+    // Pokemon name input
     const pokemonName = document
       .getElementById("pokemonName")
       .value.toLowerCase();
 
-    if (!pokemonName || pokemonName === "undefined") {
-      throw new Error("Please type a valid pokemon ID or Name.");
-    }
-
-    document.getElementById("loading").classList.add("show");
-
+    // Fetching data
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
     );
     const data = await response.json();
 
-    setTimeout(() => {
-      displayPokemon(data);
-    }, 800);
+    // Display the sprite
+    if (pokemonName === "undefined" || pokemonName.length < 1) {
+      throw new Error("Please type a valid pokemon ID or Name.");
+    } else {
+      console.log(data);
+      setTimeout(() => {
+        displayNameId(data);
+        displayHeight(data);
+        displayWeight(data);
+        displayType(data);
+      }, 800);
+    }
   } catch (error) {
     setTimeout(() => {
       console.error(error);
       document.getElementById("loading").classList.remove("show");
       document.getElementById("pokemonDisplay").classList.remove("show");
-      document.getElementById("errorMessage").classList.add("show");
+      const errorDisplay = document
+        .getElementById("errorMessage")
+        .classList.add("show");
     }, 800);
   }
 }
 
-function displayPokemon(data) {
+function displayNameId(data) {
   document.getElementById("errorMessage").classList.remove("show");
+  const pokemonSprite = data.sprites.front_default;
+  const imgDisplay = document.querySelector(".pokemon-image img");
+  imgDisplay.src = pokemonSprite;
+  document.getElementById("pokemonDisplay").classList.add("show");
   document.getElementById("loading").classList.remove("show");
+  const pokeNameDisplay = document.querySelector("#pokemonNameDisplay h2");
+  const pokeName = data.name;
+  pokeNameDisplay.textContent = pokeName;
+  const pokemonIdDisplay = document.querySelector("#pokemonId h4");
+  const pokemonID = data.id;
+  pokemonIdDisplay.textContent = pokemonID;
+}
 
-  document.querySelector(".pokemon-image img").src = data.sprites.front_default;
-  document.querySelector("#pokemonNameDisplay h2").textContent = data.name;
-  document.querySelector("#pokemonId h4").textContent = `#${data.id}`;
-  document.querySelector("#pokemonHeight h4").textContent = `${
-    data.height / 10
-  }m`;
-  document.querySelector("#pokemonWeight h4").textContent = `${
-    data.weight / 10
-  }kg`;
+function displayHeight(data) {
+  const heightH4 = document.querySelector("#pokemonHeight h4");
+  const pokemonHeight = data.height / 10;
+  heightH4.textContent = `${pokemonHeight}m`;
+}
 
+function displayWeight(data) {
+  const weightH4 = document.querySelector("#pokemonWeight h4");
+  const pokemonWeight = data.weight / 10;
+  weightH4.textContent = `${pokemonWeight}Kg`;
+}
+
+function displayType(data) {
   const typesDiv = document.getElementById("pokemonTypes");
   typesDiv.innerHTML = "";
-  data.types.forEach((typeEntry) => {
-    const typeName = typeEntry.type.name;
+
+  data.types.forEach((element) => {
+    const typeName = element.type.name;
     const typeElement = document.createElement("h3");
     typeElement.textContent = typeName;
-    typeElement.classList.add(`type-${typeName}`);
     typesDiv.appendChild(typeElement);
-  });
-
-  const pokemonDisplay = document.getElementById("pokemonDisplay");
-  pokemonDisplay.classList.remove("show");
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      pokemonDisplay.classList.add("show");
-    });
+    typeElement.classList.add(`type-${typeName}`);
   });
 }
 
+// test
 let pokemonList = [];
 
 async function loadPokemonList() {
@@ -72,7 +89,6 @@ async function loadPokemonList() {
 
 function showSuggestions(query) {
   const suggestionsContainer = document.getElementById("suggestions");
-
   if (!query) {
     suggestionsContainer.classList.remove("show");
     suggestionsContainer.innerHTML = "";
@@ -90,6 +106,7 @@ function showSuggestions(query) {
   }
 
   suggestionsContainer.innerHTML = "";
+
   suggestions.forEach((name) => {
     const div = document.createElement("div");
     div.textContent = name;
